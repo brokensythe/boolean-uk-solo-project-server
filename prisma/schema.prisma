@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Players {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  password String
+  player_challenging Challenges[] @relation("player challenging")
+  player_challenged Challenges[] @relation("player challenged")
+}
+
+model Challenges {
+  id Int @id @default(autoincrement())
+  player_challenging_id Int
+  player_challenged_id Int
+  player_challenging Players @relation("player challenging", fields: [player_challenging_id], references: [id], onUpdate: Cascade)
+  player_challenged Players @relation("player challenged", fields: [player_challenged_id], references: [id], onUpdate: Cascade)
+  Game Games?
+}
+
+model Games {
+  id Int @id @default(autoincrement())
+  challenge_id Int
+  moves String[]
+  Challenge Challenges @relation(fields: [challenge_id], references: [id])
+  Boards Boards[]
+}
+
+model Boards {
+  id Int @id @default(autoincrement())
+  board_info Json
+  timestamp DateTime @default(now())
+  game_id Int
+  Game Games @relation(fields: [game_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
