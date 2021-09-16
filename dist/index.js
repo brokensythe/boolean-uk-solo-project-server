@@ -7,8 +7,17 @@ const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const morgan_1 = __importDefault(require("morgan"));
+const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 (0, dotenv_1.config)();
 const app = (0, express_1.default)();
+const httpServer = http_1.default.createServer(app);
+const options = {};
+const io = new socket_io_1.Server(httpServer, options);
+io.on("connection", (socket) => {
+    console.log(`I am a web socket`);
+});
+httpServer.listen(4000);
 /* SETUP MIDDLEWARE */
 app.disable("x-powered-by");
 app.use((0, cors_1.default)());
@@ -24,4 +33,3 @@ const port = process.env.PORT || 3030;
 app.listen(port, () => {
     console.log(`\n🚀 Server is running on http://localhost:${port}/\n`);
 });
-//# sourceMappingURL=index.js.map
