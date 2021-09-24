@@ -16,6 +16,7 @@ model Players {
   username String @unique
   email String @unique
   password String
+  logged_in Boolean
   player_challenging Challenges[] @relation("player challenging")
   player_challenged Challenges[] @relation("player challenged")
 }
@@ -30,7 +31,7 @@ model Challenges {
 
 model Games {
   id Int @id @default(autoincrement())
-  moves String[]
+  moves Json
   Boards Boards[]
 }
 
