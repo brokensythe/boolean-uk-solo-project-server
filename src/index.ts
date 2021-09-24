@@ -4,6 +4,7 @@ import cors from "cors"
 import morgan from "morgan"
 import http from "http"
 import { Server, Socket } from "socket.io"
+import gameRouter from "./resources/Games/routes"
 
 config()
 
@@ -20,6 +21,7 @@ app.use(morgan("dev"))
 
 /* SETUP ROUTES */
 
+app.use("/games", gameRouter)
 app.get("*", (req, res) => {
   res.json({ ok: true })
 })

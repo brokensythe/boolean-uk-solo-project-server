@@ -26,14 +26,14 @@ model Challenges {
   player_challenged_id Int
   player_challenging Players @relation("player challenging", fields: [player_challenging_id], references: [id], onUpdate: Cascade)
   player_challenged Players @relation("player challenged", fields: [player_challenged_id], references: [id], onUpdate: Cascade)
-  Game Games?
+  // Game Games?
 }
 
 model Games {
   id Int @id @default(autoincrement())
-  challenge_id Int
+  // challenge_id Int
   moves String[]
-  Challenge Challenges @relation(fields: [challenge_id], references: [id])
+  // Challenge Challenges @relation(fields: [challenge_id], references: [id])
   Boards Boards[]
 }
 
