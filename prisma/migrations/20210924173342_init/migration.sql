@@ -4,6 +4,7 @@ CREATE TABLE "Players" (
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
+    "logged_in" BOOLEAN NOT NULL,
 
     CONSTRAINT "Players_pkey" PRIMARY KEY ("id")
 );
@@ -20,8 +21,7 @@ CREATE TABLE "Challenges" (
 -- CreateTable
 CREATE TABLE "Games" (
     "id" SERIAL NOT NULL,
-    "challenge_id" INTEGER NOT NULL,
-    "moves" TEXT[],
+    "moves" JSONB NOT NULL DEFAULT E'[]',
 
     CONSTRAINT "Games_pkey" PRIMARY KEY ("id")
 );
@@ -42,17 +42,11 @@ CREATE UNIQUE INDEX "Players_username_key" ON "Players"("username");
 -- CreateIndex
 CREATE UNIQUE INDEX "Players_email_key" ON "Players"("email");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Games_challenge_id_unique" ON "Games"("challenge_id");
-
 -- AddForeignKey
 ALTER TABLE "Challenges" ADD CONSTRAINT "Challenges_player_challenging_id_fkey" FOREIGN KEY ("player_challenging_id") REFERENCES "Players"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Challenges" ADD CONSTRAINT "Challenges_player_challenged_id_fkey" FOREIGN KEY ("player_challenged_id") REFERENCES "Players"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Games" ADD CONSTRAINT "Games_challenge_id_fkey" FOREIGN KEY ("challenge_id") REFERENCES "Challenges"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Boards" ADD CONSTRAINT "Boards_game_id_fkey" FOREIGN KEY ("game_id") REFERENCES "Games"("id") ON DELETE CASCADE ON UPDATE CASCADE;

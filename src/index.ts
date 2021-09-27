@@ -5,6 +5,7 @@ import morgan from "morgan"
 import http from "http"
 import { Server, Socket } from "socket.io"
 import gameRouter from "./resources/Games/routes"
+import boardRouter from "./resources/Boards/routes"
 
 config()
 
@@ -22,6 +23,7 @@ app.use(morgan("dev"))
 /* SETUP ROUTES */
 
 app.use("/games", gameRouter)
+app.use("/boards", boardRouter)
 app.get("*", (req, res) => {
   res.json({ ok: true })
 })

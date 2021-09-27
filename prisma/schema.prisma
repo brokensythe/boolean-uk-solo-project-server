@@ -31,7 +31,7 @@ model Challenges {
 
 model Games {
   id Int @id @default(autoincrement())
-  moves Json
+  moves Json @default("[]")
   Boards Boards[]
 }
 
