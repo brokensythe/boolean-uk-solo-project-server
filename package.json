@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "npx kill-port 3030 && tsc && node ./dist/src/index.js || npx kill-port 3030 && exit 1",
+    "prodCompile": "tsc && node ./dist/src/index.js || exit 1",
     "start": "nodemon -e ts -x \"npm run compile\""
   },
   "keywords": [],
